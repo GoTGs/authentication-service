@@ -1,4 +1,4 @@
-#include "endpoints.hpp"
+#include "../include/endpoints.hpp"
 #include <thread>
 
 int main(int argc, char** argv) {

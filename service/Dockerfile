@@ -4,12 +4,6 @@ WORKDIR /server/
 
 COPY . .
 
-ENV PG_USER=postgres
-ENV PG_PASS=postgres
-ENV PG_DB=postgres
-ENV PG_HOST=postgres
-ENV PG_PORT=5432
-
 RUN apt-get update
 
 RUN apt-get install -y cmake

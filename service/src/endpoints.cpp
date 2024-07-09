@@ -1,4 +1,4 @@
-#include "endpoints.hpp"
+#include "../include/endpoints.hpp"
 
 returnType Index(CppHttp::Net::Request req) {
     return {CppHttp::Net::ResponseType::OK, "", {}};

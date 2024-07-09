@@ -4,6 +4,8 @@ services:
   cpphttp:
     build: .
     command: sh -c "stdbuf -oL ./build/auth"
+    env_file:
+      - .env
     # command: sh -c "ls /usr/include/openssl"
     ports:
       - "80:80"
