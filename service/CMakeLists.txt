@@ -10,7 +10,9 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/dependencies/cpphttp/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/dependencies/soci/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-add_executable(auth "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/database.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/hash.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/endpoints.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/cpphttp/src/request.cpp")
+file (GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/cpphttp/src/request.cpp")
+
+add_executable(auth ${SOURCES})
 
 # target_sources(service 
 #                       PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/database.cpp"
