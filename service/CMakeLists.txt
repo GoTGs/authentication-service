@@ -8,6 +8,7 @@ include_directories(${PostgreSQL_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR})
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/dependencies/cpphttp/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/dependencies/soci/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/dependencies/jwt-cpp/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 file (GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/cpphttp/src/request.cpp")

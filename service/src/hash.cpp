@@ -16,12 +16,14 @@ std::string RandomCode(const int length) {
 	std::string code;
 	for (int i = 0; i < length; i++) {
 		// have random assortment of characters including numbers and letters
+		// symbols: 33-47
 		// 0-9: 48-57
+		// more symbols: 58-64
 		// A-Z: 65-90
 
 		int random = rand() % 2;
 		if (random == 0) {
-			code += (rand() % 10) + 48;
+			code += (rand() % 32) + 33;
 		}
 		else {
 			code += (rand() % 26) + 65;

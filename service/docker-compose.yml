@@ -9,4 +9,5 @@ services:
     # command: sh -c "ls /usr/include/openssl"
     ports:
       - "80:80"
+      - "8000:8000"
       - "8080:8080"
