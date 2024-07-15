@@ -22,6 +22,7 @@ struct User {
 	std::string salt;
 	std::string firstName;
 	std::string lastName;
+    std::string role;
 };
 
 namespace soci
@@ -39,6 +40,7 @@ namespace soci
             u.salt = v.get<std::string>("salt");
             u.firstName = v.get<std::string>("first_name");
             u.lastName = v.get<std::string>("last_name");
+            u.role = v.get<std::string>("role");
         }
 
         static void to_base(const User& u, values& v, indicator& ind)
@@ -49,6 +51,7 @@ namespace soci
             v.set("salt", u.salt);
             v.set("first_name", u.firstName);
             v.set("last_name", u.lastName);
+            v.set("role", u.role);
             ind = i_ok;
         }
     };

@@ -1,13 +1,9 @@
-version: '3.9'
-
 services:
-  cpphttp:
+  auth:
     build: .
     command: sh -c "stdbuf -oL ./build/auth"
     env_file:
       - .env
     # command: sh -c "ls /usr/include/openssl"
     ports:
-      - "80:80"
       - "8000:8000"
-      - "8080:8080"

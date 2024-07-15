@@ -51,13 +51,14 @@ returnType Register(CppHttp::Net::Request req) {
     std::string hashedSalted = Hash(password + salt);
 
     User user;
-    *sql << "INSERT INTO users (id, email, password, salt, first_name, last_name) VALUES (DEFAULT, :email, :password, :salt, :first_name, :last_name) RETURNING *", soci::use(email), soci::use(hashedSalted), soci::use(salt), soci::use(firstName), soci::use(lastName), soci::into(user);
+    *sql << "INSERT INTO users (id, email, password, salt, first_name, last_name, role) VALUES (DEFAULT, :email, :password, :salt, :first_name, :last_name, DEFAULT) RETURNING *", soci::use(email), soci::use(hashedSalted), soci::use(salt), soci::use(firstName), soci::use(lastName), soci::into(user);
 
     json response;
     response["id"] = user.id;
     response["email"] = user.email;
     response["firstName"] = user.firstName;
     response["lastName"] = user.lastName;
+    response["role"] = user.role;
 
     return {CppHttp::Net::ResponseType::JSON, response.dump(4), {}};
 }
