@@ -20,11 +20,14 @@ returnType Register(CppHttp::Net::Request req) {
 		return {CppHttp::Net::ResponseType::BAD_REQUEST, "Missing required fields", {}};
 	}
 
-    *sql << "SELECT * FROM users WHERE email = :email", soci::use(email);
+    {
+        std::lock_guard<std::mutex> lock(Database::dbMutex);
+        *sql << "SELECT * FROM users WHERE email = :email", soci::use(email);
 
-    if (sql->got_data()) {
-		return { CppHttp::Net::ResponseType::BAD_REQUEST, "Email already in use", {} };
-	}
+        if (sql->got_data()) {
+		    return { CppHttp::Net::ResponseType::BAD_REQUEST, "Email already in use", {} };
+	    }
+    }
 
     if (email.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.") != std::string::npos) {
         return { CppHttp::Net::ResponseType::BAD_REQUEST, "Invalid email", {} };
@@ -51,7 +54,10 @@ returnType Register(CppHttp::Net::Request req) {
     std::string hashedSalted = Hash(password + salt);
 
     User user;
-    *sql << "INSERT INTO users (id, email, password, salt, first_name, last_name, role) VALUES (DEFAULT, :email, :password, :salt, :first_name, :last_name, DEFAULT) RETURNING *", soci::use(email), soci::use(hashedSalted), soci::use(salt), soci::use(firstName), soci::use(lastName), soci::into(user);
+    {
+        std::lock_guard<std::mutex> lock(Database::dbMutex);
+        *sql << "INSERT INTO users (id, email, password, salt, first_name, last_name, role) VALUES (DEFAULT, :email, :password, :salt, :first_name, :last_name, DEFAULT) RETURNING *", soci::use(email), soci::use(hashedSalted), soci::use(salt), soci::use(firstName), soci::use(lastName), soci::into(user);
+    }
 
     json response;
     response["id"] = user.id;
@@ -83,11 +89,15 @@ returnType Login(CppHttp::Net::Request req) {
     }
 
     User user;
-    *sql << "SELECT * FROM users WHERE email = :email", soci::use(email), soci::into(user);
-
-    if (!sql->got_data()) {
-        return { CppHttp::Net::ResponseType::BAD_REQUEST, "User with email " + email + " not found", {}};
+    {
+        std::lock_guard<std::mutex> lock(Database::dbMutex);
+        *sql << "SELECT * FROM users WHERE email = :email", soci::use(email), soci::into(user);
+        
+        if (!sql->got_data()) {
+            return { CppHttp::Net::ResponseType::BAD_REQUEST, "User with email " + email + " not found", {}};
+        }
     }
+
 
     std::string hashedSalted = Hash(password + user.salt);
 

@@ -208,7 +208,6 @@ namespace CppHttp {
                         std::osyncstream(std::cout) << "\033[31m[-] Error code: " << errno << "\033[0m\n";
                         std::osyncstream(std::cout) << "\033[31m[-] Error message: " << strerror(errno) << "\033[0m\n";
                     #endif
-                    throw std::runtime_error("Failed to accept new connection");
                 }
 
                 std::unique_lock<std::mutex> lock(queueMutex);
@@ -231,7 +230,6 @@ namespace CppHttp {
                             std::osyncstream(std::cout) << "\033[31m[-] Error message: " << strerror(errno) << "\033[0m\n";
                         #endif
                         closesocket(newConnection);
-                        throw std::runtime_error("Failed to read client request");
                     }
                     else if (bytesReceived == 0) {
 						std::osyncstream(std::cout) << "\033[31m[-] Client disconnected\033[0m\n";
@@ -258,7 +256,6 @@ namespace CppHttp {
                             std::osyncstream(std::cout) << "\033[31m[-] Error message: " << strerror(errno) << "\033[0m\n";
                         #endif
                         closesocket(newConnection);
-                        throw std::runtime_error("Failed to read client request");
                     }
 
                     #ifdef API_DEBUG
