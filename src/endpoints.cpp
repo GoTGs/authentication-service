@@ -113,7 +113,9 @@ returnType Login(CppHttp::Net::Request req) {
         .set_expires_at(std::chrono::system_clock::now() + std::chrono::hours{ 24 })
         .set_issued_at(std::chrono::system_clock::now());
 
-    std::string signedToken = jwtToken.sign(jwt::algorithm::rs512{ "", std::getenv("RSASECRET"), "", ""});
+    std::string rsaSecret = std::getenv("RSASECRET");
+
+    std::string signedToken = jwtToken.sign(jwt::algorithm::rs512{ "", rsaSecret, "", ""});
 
     json response;
     response["token"] = signedToken;
