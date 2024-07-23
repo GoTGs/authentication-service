@@ -115,6 +115,14 @@ returnType Login(CppHttp::Net::Request req) {
 
     std::string rsaSecret = std::getenv("RSASECRET");
 
+    size_t pos = 0;
+
+    while ((pos = rsaSecret.find("\\n", pos)) != std::string::npos) {
+		rsaSecret.replace(pos, 2, "\n");
+	}
+
+    std::cout << rsaSecret << std::endl;
+
     std::string signedToken = jwtToken.sign(jwt::algorithm::rs512{ "", rsaSecret, "", ""});
 
     json response;
