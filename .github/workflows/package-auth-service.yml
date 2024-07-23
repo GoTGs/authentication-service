@@ -49,7 +49,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ secrets.actor }}
-          password: ${{ secrets.token }}       
+          password: ${{ secrets.token }}      
       
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -65,3 +65,11 @@ jobs:
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.created=${{ steps.set-variables.outputs.CREATED }}
             org.opencontainers.image.revision=${{ steps.set-variables.outputs.VERSION }}
+          build-args: |
+            PG_USER=${{ secrets.PG_USER }}
+            PG_PASS=${{ secrets.PG_PASS }}
+            PG_DB=${{ secrets.PG_DB }}
+            PG_HOST=${{ secrets.PG_HOST }}
+            PG_PORT=${{ secrets.PG_PORT }}
+            RSASECRET=${{ secrets.RSASECRET }}
+            RSAPUBLIC=${{ secrets.RSAPUBLIC }}
