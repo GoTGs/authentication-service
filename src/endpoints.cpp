@@ -118,8 +118,8 @@ returnType Login(CppHttp::Net::Request req) {
     size_t pos = 0;
 
     while ((pos = rsaSecret.find("\\n", pos)) != std::string::npos) {
-		rsaSecret.replace(pos, 2, "\n");
-	}
+        rsaSecret.replace(pos, 2, "\n");
+    }
 
     std::cout << rsaSecret << std::endl;
 
